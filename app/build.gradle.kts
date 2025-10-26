@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    application
-    id("com.github.ben-manes.versions") version "0.51.0"
+    id("application")
+    id("com.github.ben-manes.versions") version "0.51.0" // можно 0.53.0
 }
 
 group = "hexlet.code"
@@ -17,6 +17,12 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
-    useJUnitPlatform()
+application {
+    mainClass.set("hexlet.code.App")   // для Kotlin DSL надёжнее set(...)
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
 }
