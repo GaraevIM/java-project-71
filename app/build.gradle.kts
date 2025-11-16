@@ -1,6 +1,9 @@
+import org.gradle.api.plugins.quality.Checkstyle
+
 plugins {
     id("java")
     id("application")
+    id("checkstyle")
     id("com.github.ben-manes.versions") version "0.53.0" // можно оставить 0.51.0
 }
 
@@ -26,4 +29,17 @@ application {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+checkstyle {
+    toolVersion = "10.17.0"
+    configDirectory.set(layout.projectDirectory.dir("config/checkstyle"))
+    isIgnoreFailures = false
+}
+
+tasks.withType<Checkstyle> {
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+    }
 }
