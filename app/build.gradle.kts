@@ -4,7 +4,9 @@ plugins {
     id("java")
     id("application")
     id("checkstyle")
-    id("com.github.ben-manes.versions") version "0.53.0" // можно оставить 0.51.0
+    jacoco
+    id("org.sonarqube") version "5.1.0.4882"
+    id("com.github.ben-manes.versions") version "0.53.0"
 }
 
 group = "hexlet.code"
@@ -29,6 +31,21 @@ application {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        csv.required.set(false)
+    }
 }
 
 checkstyle {
@@ -41,5 +58,14 @@ tasks.withType<Checkstyle> {
     reports {
         xml.required.set(false)
         html.required.set(true)
+    }
+}
+
+sonarqube {
+    properties {
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
+        )
     }
 }
