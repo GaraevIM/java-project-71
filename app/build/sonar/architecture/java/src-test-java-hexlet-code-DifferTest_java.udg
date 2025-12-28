@@ -1,183 +1,0 @@
-
-1.0GaraevIM_hexlet-gitJavaFrontend"1766959219577*java2.BÎ
-.
-)src/test/java/hexlet/code/DifferTest.java2
-	
-type3
-	
-TEST4
-
-package6
-
-hexlet.code7
-
-hexlet.code.DifferTest9
-
-class10
-
-access11
-
-	protected12
-
-
-full-range13
-
-(9:1)-(31:2)14
-
-simple-name15
-
-
-DifferTest16
-S
-Mhexlet.code.DifferTest#getFixturePath(Ljava/lang/String;)Ljava/nio/file/Path;18
-
-method19
-
-private20
-
-(11:5)-(15:6)21
-
-getFixturePath22
-;
-5hexlet.code.DifferTest#testGenerateDiffForFlatJson()V24
-
-(17:5)-(30:6)25
-!
-testGenerateDiffForFlatJson26
- 
-org.junit.jupiter.api.Test28
-
-unknown29
-
-annotated by30
-
-
-uses31
-
-
-references32
-
-calls33
-
-hexlet.Differ35
-T
-Nhexlet.Differ#generate(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;37
-&
- org.junit.jupiter.api.Assertions39
-Z
-Torg.junit.jupiter.api.Assertions#assertEquals(Ljava/lang/Object;Ljava/lang/Object;)V41J
-
-1
-12
-
-
-3
-4 Z
-
-5
-5768jÀ
-G
-8B
-8910 *
-1	 	(:5B$
-
-
-11
-12
-
-
-13
-14
-
-
-15
-16
-
-27
-272829
-
-40
-404129
-
-34
-343529
-
-38
-383929
-M
-17G
-171819 *
-1 ( 28:5B$
-
-
-11
-20
-
-
-13
-21
-
-
-15
-22
-
-36
-363729
-M
-23G
-232419 *
-1
- (%28:5B$
-
-
-11
-12
-
-
-13
-25
-
-
-15
-26r‹
-
-232730*
-1 (
-
-
-232731*
-1 (
-
-
-23832*
-1 ('
-
-231733*
-1 ('
-
-23832*
-1 ('
-
-231733*
-1 ('
-
-23832*
-1) (7
-
-231733*
-1) (7
-
-233432*
-1 (%
-
-233633*
-1 (%
-
-233431*
-1 (
-
-233832*
-1	 (
-
-234033*
-1	 (

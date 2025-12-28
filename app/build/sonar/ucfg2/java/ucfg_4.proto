@@ -1,49 +1,0 @@
-
-=hexlet.Differ#stringify(Ljava/lang/Object;)Ljava/lang/String;U
-KC:/Users/79194/IdeaProjects/hexlet-git/app/src/main/java/hexlet/Differ.java: :(#"5*2
-2? ?("#
-? ?(
-
-sjava.lang.String*d
-3> >(M
-K
-> >(%
-sjava.lang.String"__id*"
-
-__unknown_file (
-""*
-2
-1*#
-4< <("
-< <(
-null*Ž
-5; ;(w
-u
-; ;(
-%0boolean"	__compare*
-; ;(
-==*'
-; ;(
-
-valuejava.lang.Object*
-; ;(
-""*
-3
-4*†
-1A A(Ð
-Í
-A A($
-%1java.lang.String">java.lang.String#valueOf(Ljava/lang/Object;)Ljava/lang/String;*0
-
-__unknown_file ("
-java.lang.String*7
-
-__unknown_file (
-
-valuejava.lang.Object"$
-A A(%
-
-%1java.lang.String:%
-:$ :(0
-valuejava.lang.ObjectB"
-hexlet.Differ
