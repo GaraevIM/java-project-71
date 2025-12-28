@@ -1,0 +1,7 @@
+organization=garaevim
+projectKey=GaraevIM_hexlet-git
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.78018
+dashboardUrl=https://sonarcloud.io/dashboard?id=GaraevIM_hexlet-git
+ceTaskId=AZtm-ik8-MhM3DrSdKgi
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZtm-ik8-MhM3DrSdKgi

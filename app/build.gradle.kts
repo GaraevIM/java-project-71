@@ -78,6 +78,7 @@ sonarqube {
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.organization", "garaevim")
         property("sonar.projectKey", "GaraevIM_hexlet-git")
+        property("sonar.projectName", "hexlet-git")
         property(
             "sonar.coverage.jacoco.xmlReportPaths",
             "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
