@@ -63,9 +63,13 @@ tasks.withType<Checkstyle> {
 
 sonarqube {
     properties {
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.organization", "YOUR_ORG")
+        property("sonar.projectKey", "YOUR_ORG_hexlet-git")
         property(
             "sonar.coverage.jacoco.xmlReportPaths",
             "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
         )
     }
 }
+
