@@ -1,16 +1,16 @@
 .PHONY: build run run-dist install clean
 
 build:
-	.\gradlew.bat build
+	./gradlew build
 
 run:
-	.\gradlew.bat run
+	./gradlew run
 
 install:
-	.\gradlew.bat installDist
+	./gradlew installDist
 
 run-dist: install
 	.\build\install\app\bin\app.bat
 
 clean:
-	.\gradlew.bat clean
+	./gradlew clean
