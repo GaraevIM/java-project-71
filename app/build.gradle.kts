@@ -12,6 +12,12 @@ plugins {
 group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -31,6 +37,12 @@ application {
 
 tasks.test {
     useJUnitPlatform()
+
+    // Чтобы тесты гарантированно запускались на Java 21 (а не на системной 24)
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    })
+
     finalizedBy(tasks.jacocoTestReport)
 }
 

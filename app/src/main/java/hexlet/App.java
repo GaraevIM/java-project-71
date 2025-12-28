@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet;
 
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
