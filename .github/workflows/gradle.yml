@@ -27,7 +27,7 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v3
 
-      - run: make build
+      - run: chmod +x gradlew make build
 
       - run: make test
 
