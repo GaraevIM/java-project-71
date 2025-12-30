@@ -14,14 +14,31 @@ class DifferTest {
                 .normalize();
     }
 
+    private String readFixture(String fileName) throws Exception {
+        return Files.readString(getFixturePath(fileName))
+                .replace("\r\n", "\n")
+                .trim();
+    }
+
     @Test
     void testGenerateDiffForFlatJson() throws Exception {
         var filePath1 = getFixturePath("file1.json").toString();
         var filePath2 = getFixturePath("file2.json").toString();
 
-        var expected = Files.readString(getFixturePath("expected.txt"))
+        var expected = readFixture("expected.txt");
+        var actual = Differ.generate(filePath1, filePath2)
                 .replace("\r\n", "\n")
                 .trim();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testGenerateDiffForFlatYaml() throws Exception {
+        var filePath1 = getFixturePath("file1.yml").toString();
+        var filePath2 = getFixturePath("file2.yml").toString();
+
+        var expected = readFixture("expected_yml.txt");
         var actual = Differ.generate(filePath1, filePath2)
                 .replace("\r\n", "\n")
                 .trim();
