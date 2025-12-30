@@ -25,6 +25,7 @@ repositories {
 dependencies {
     implementation("info.picocli:picocli:4.7.6")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.2")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -38,7 +39,6 @@ application {
 tasks.test {
     useJUnitPlatform()
 
-    // Чтобы тесты гарантированно запускались на Java 21 (а не на системной 24)
     javaLauncher.set(javaToolchains.launcherFor {
         languageVersion.set(JavaLanguageVersion.of(21))
     })
@@ -76,12 +76,4 @@ tasks.withType<Checkstyle> {
 sonarqube {
     properties {
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.organization", "garaevim")
-        property("sonar.projectKey", "GaraevIM_hexlet-git")
-        property("sonar.projectName", "hexlet-git")
-        property(
-            "sonar.coverage.jacoco.xmlReportPaths",
-            "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
-        )
-    }
-}
+        property("sonar.organization
