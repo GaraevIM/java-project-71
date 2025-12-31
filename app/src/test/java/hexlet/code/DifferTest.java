@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import hexlet.Differ;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,8 +26,9 @@ class DifferTest {
         Path expectedPath = getFixturePath("expected.txt");
 
         String expected = readFile(expectedPath).trim();
-        String actual = Differ.generate(file1.toString(), file2.toString()).replace("\r\n", "\n").trim();
-
+        String actual = Differ.generate(file1.toString(), file2.toString())
+                .replace("\r\n", "\n")
+                .trim();
 
         assertEquals(expected, actual);
     }
