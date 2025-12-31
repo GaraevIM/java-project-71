@@ -1,11 +1,5 @@
 package hexlet;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeSet;
@@ -16,18 +10,8 @@ public final class Differ {
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
-        Path p1 = Paths.get(filePath1).toAbsolutePath().normalize();
-        Path p2 = Paths.get(filePath2).toAbsolutePath().normalize();
-
-        ObjectMapper mapper1 = getMapper(p1);
-        ObjectMapper mapper2 = getMapper(p2);
-
-        Map<String, Object> m1 = mapper1.readValue(Files.readString(p1),
-                new TypeReference<Map<String, Object>>() {
-                });
-        Map<String, Object> m2 = mapper2.readValue(Files.readString(p2),
-                new TypeReference<Map<String, Object>>() {
-                });
+        Map<String, Object> m1 = Parser.parse(filePath1);
+        Map<String, Object> m2 = Parser.parse(filePath2);
 
         var keys = new TreeSet<String>();
         keys.addAll(m1.keySet());
@@ -58,16 +42,6 @@ public final class Differ {
 
         sb.append("}");
         return sb.toString();
-    }
-
-    private static ObjectMapper getMapper(Path path) {
-        String name = path.getFileName().toString().toLowerCase();
-
-        if (name.endsWith(".yml") || name.endsWith(".yaml")) {
-            return new ObjectMapper(new YAMLFactory());
-        }
-
-        return new ObjectMapper();
     }
 
     private static String stringify(Object value) {
