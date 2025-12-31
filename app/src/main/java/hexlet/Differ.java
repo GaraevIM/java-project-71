@@ -1,5 +1,7 @@
 package hexlet;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeSet;
@@ -9,16 +11,33 @@ public final class Differ {
     private Differ() {
     }
 
-    public static String generate(String filePath1, String filePath2) throws Exception {
+    public static String generate(String filePath1, String filePath2, String format) throws Exception {
         Map<String, Object> m1 = Parser.parse(filePath1);
         Map<String, Object> m2 = Parser.parse(filePath2);
 
+        List<DiffNode> tree = buildTree(m1, m2);
+
+        Formatter formatter = getFormatter(format);
+        return formatter.format(tree);
+    }
+
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return generate(filePath1, filePath2, "stylish");
+    }
+
+    private static Formatter getFormatter(String format) {
+        if (format == null || format.isBlank() || format.equals("stylish")) {
+            return new StylishFormatter();
+        }
+        throw new IllegalArgumentException("Unknown format: " + format);
+    }
+
+    private static List<DiffNode> buildTree(Map<String, Object> m1, Map<String, Object> m2) {
         var keys = new TreeSet<String>();
         keys.addAll(m1.keySet());
         keys.addAll(m2.keySet());
 
-        var sb = new StringBuilder();
-        sb.append("{\n");
+        List<DiffNode> result = new ArrayList<>();
 
         for (String key : keys) {
             boolean in1 = m1.containsKey(key);
@@ -27,30 +46,25 @@ public final class Differ {
             Object v2 = m2.get(key);
 
             if (in1 && in2) {
-                if (Objects.equals(v1, v2)) {
-                    sb.append("    ").append(key).append(": ").append(stringify(v1)).append("\n");
+                if (v1 instanceof Map<?, ?> map1 && v2 instanceof Map<?, ?> map2) {
+                    @SuppressWarnings("unchecked")
+                    Map<String, Object> cm1 = (Map<String, Object>) map1;
+                    @SuppressWarnings("unchecked")
+                    Map<String, Object> cm2 = (Map<String, Object>) map2;
+
+                    result.add(new DiffNode(key, NodeStatus.NESTED, null, null, buildTree(cm1, cm2)));
+                } else if (Objects.equals(v1, v2)) {
+                    result.add(new DiffNode(key, NodeStatus.UNCHANGED, v1, null, List.of()));
                 } else {
-                    sb.append("  - ").append(key).append(": ").append(stringify(v1)).append("\n");
-                    sb.append("  + ").append(key).append(": ").append(stringify(v2)).append("\n");
+                    result.add(new DiffNode(key, NodeStatus.CHANGED, v1, v2, List.of()));
                 }
             } else if (in1) {
-                sb.append("  - ").append(key).append(": ").append(stringify(v1)).append("\n");
+                result.add(new DiffNode(key, NodeStatus.REMOVED, v1, null, List.of()));
             } else {
-                sb.append("  + ").append(key).append(": ").append(stringify(v2)).append("\n");
+                result.add(new DiffNode(key, NodeStatus.ADDED, null, v2, List.of()));
             }
         }
 
-        sb.append("}");
-        return sb.toString();
-    }
-
-    private static String stringify(Object value) {
-        if (value == null) {
-            return "null";
-        }
-        if (value instanceof String s) {
-            return s;
-        }
-        return String.valueOf(value);
+        return result;
     }
 }

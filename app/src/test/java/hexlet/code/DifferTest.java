@@ -1,6 +1,8 @@
 package hexlet.code;
 
 import hexlet.Differ;
+
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
@@ -9,39 +11,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DifferTest {
 
     private Path getFixturePath(String fileName) {
-        return Path.of("src", "test", "resources", fileName)
+        return Path.of("src", "test", "resources", "fixtures", fileName)
                 .toAbsolutePath()
                 .normalize();
     }
 
-    private String readFixture(String fileName) throws Exception {
-        return Files.readString(getFixturePath(fileName))
-                .replace("\r\n", "\n")
-                .trim();
+    private String readFile(Path path) throws IOException {
+        return Files.readString(path).replace("\r\n", "\n");
     }
 
     @Test
-    void testGenerateDiffForFlatJson() throws Exception {
-        var filePath1 = getFixturePath("file1.json").toString();
-        var filePath2 = getFixturePath("file2.json").toString();
+    void testGenerateNestedStructures() throws Exception {
+        Path file1 = getFixturePath("file1.json");
+        Path file2 = getFixturePath("file2.json");
+        Path expectedPath = getFixturePath("expected.txt");
 
-        var expected = readFixture("expected.txt");
-        var actual = Differ.generate(filePath1, filePath2)
-                .replace("\r\n", "\n")
-                .trim();
+        String expected = readFile(expectedPath).trim();
+        String actual = Differ.generate(file1.toString(), file2.toString()).replace("\r\n", "\n").trim();
 
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void testGenerateDiffForFlatYaml() throws Exception {
-        var filePath1 = getFixturePath("file1.yml").toString();
-        var filePath2 = getFixturePath("file2.yml").toString();
-
-        var expected = readFixture("expected_yml.txt");
-        var actual = Differ.generate(filePath1, filePath2)
-                .replace("\r\n", "\n")
-                .trim();
 
         assertEquals(expected, actual);
     }

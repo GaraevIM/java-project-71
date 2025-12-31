@@ -7,6 +7,9 @@
 ## Демонстрация работы
 [Вычислитель отличий](https://asciinema.org/a/FJSDghOpGWzQoJaI9J0puiqlQ)
 
+## Пример сравнения YAML-файлов
+[Сравнение плоских YAML-файлов](https://asciinema.org/a/vmVCseUbrsFY7Bk6Ln9T7KPwD)
+
 ## Установка
 
 ```bash

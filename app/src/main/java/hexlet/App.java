@@ -21,17 +21,15 @@ public class App implements Callable<Integer> {
     )
     private String format = "stylish";
 
-    @Parameters(index = "0", paramLabel = "filepath1",
-            description = "path to first file")
+    @Parameters(index = "0", paramLabel = "filepath1", description = "path to first file")
     private String filepath1;
 
-    @Parameters(index = "1", paramLabel = "filepath2",
-            description = "path to second file")
+    @Parameters(index = "1", paramLabel = "filepath2", description = "path to second file")
     private String filepath2;
 
     @Override
     public Integer call() throws Exception {
-        String diff = Differ.generate(filepath1, filepath2);
+        String diff = Differ.generate(filepath1, filepath2, format);
         System.out.println(diff);
         return 0;
     }

@@ -13,7 +13,7 @@ install:
 	./gradlew installDist
 
 run-dist: install
-	./build/install/app/bin/app
+	./build/install/hexlet-git/bin/hexlet-git
 
 clean:
 	./gradlew clean
