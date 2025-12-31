@@ -33,7 +33,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("hexlet.code.App")
+    mainClass.set("hexlet.App")
 }
 
 tasks.test {
