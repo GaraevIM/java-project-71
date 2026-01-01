@@ -17,22 +17,11 @@ public final class Differ {
 
         List<DiffNode> tree = buildTree(m1, m2);
 
-        Formatter formatter = getFormatter(format);
-        return formatter.format(tree);
+        return Formatter.format(tree, format);
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
         return generate(filePath1, filePath2, "stylish");
-    }
-
-    private static Formatter getFormatter(String format) {
-        if (format == null || format.isBlank() || format.equals("stylish")) {
-            return new StylishFormatter();
-        }
-        if (format.equals("plain")) {
-            return new PlainFormatter();
-        }
-        throw new IllegalArgumentException("Unknown format: " + format);
     }
 
     private static List<DiffNode> buildTree(Map<String, Object> m1, Map<String, Object> m2) {

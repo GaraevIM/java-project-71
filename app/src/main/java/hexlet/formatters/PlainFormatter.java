@@ -1,9 +1,12 @@
-package hexlet;
+package hexlet.formatters;
 
+import hexlet.DiffNode;
+import hexlet.NodeStatus;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public final class PlainFormatter implements Formatter {
+public final class PlainFormatter implements DiffFormatter {
 
     @Override
     public String format(List<DiffNode> tree) {
@@ -38,7 +41,7 @@ public final class PlainFormatter implements Formatter {
         if (value == null) {
             return "null";
         }
-        if (value instanceof List<?> || value instanceof java.util.Map<?, ?>) {
+        if (value instanceof List<?> || value instanceof Map<?, ?>) {
             return "[complex value]";
         }
         if (value instanceof String s) {

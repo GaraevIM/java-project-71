@@ -13,6 +13,9 @@
 ## Пример сравнения вложенных структур
 [Сравнение вложенных JSON и YAML файлов (stylish по умолчанию)](https://asciinema.org/a/zzLYlXR4XaRiD6ACo0ZatdawB)
 
+## Пример вывода в формате plain
+[Сравнение файлов в формате plain](https://asciinema.org/a/tyqYTwHXuxa6Gn0o7yQIP436f)
+
 ## Установка
 
 ```bash
