@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DifferTest {
@@ -46,4 +48,22 @@ class DifferTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    void testGenerateJsonFormat() throws Exception {
+        Path file1 = getFixturePath("file1.json");
+        Path file2 = getFixturePath("file2.json");
+        Path expectedPath = getFixturePath("expected_json.json");
+
+        String actual = Differ.generate(file1.toString(), file2.toString(), "json");
+        String expected = readFile(expectedPath);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        JsonNode actualNode = mapper.readTree(actual);
+        JsonNode expectedNode = mapper.readTree(expected);
+
+        assertEquals(expectedNode, actualNode);
+    }
+
 }

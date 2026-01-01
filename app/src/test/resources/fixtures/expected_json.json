@@ -1,0 +1,110 @@
+[
+  {
+    "key": "chars1",
+    "status": "UNCHANGED",
+    "value1": ["a", "b", "c"],
+    "value2": null,
+    "children": []
+  },
+  {
+    "key": "chars2",
+    "status": "CHANGED",
+    "value1": ["d", "e", "f"],
+    "value2": false,
+    "children": []
+  },
+  {
+    "key": "checked",
+    "status": "CHANGED",
+    "value1": false,
+    "value2": true,
+    "children": []
+  },
+  {
+    "key": "default",
+    "status": "CHANGED",
+    "value1": null,
+    "value2": ["value1", "value2"],
+    "children": []
+  },
+  {
+    "key": "id",
+    "status": "CHANGED",
+    "value1": 45,
+    "value2": null,
+    "children": []
+  },
+  {
+    "key": "key1",
+    "status": "REMOVED",
+    "value1": "value1",
+    "value2": null,
+    "children": []
+  },
+  {
+    "key": "key2",
+    "status": "ADDED",
+    "value1": null,
+    "value2": "value2",
+    "children": []
+  },
+  {
+    "key": "numbers1",
+    "status": "UNCHANGED",
+    "value1": [1, 2, 3, 4],
+    "value2": null,
+    "children": []
+  },
+  {
+    "key": "numbers2",
+    "status": "CHANGED",
+    "value1": [2, 3, 4, 5],
+    "value2": [22, 33, 44, 55],
+    "children": []
+  },
+  {
+    "key": "numbers3",
+    "status": "REMOVED",
+    "value1": [3, 4, 5],
+    "value2": null,
+    "children": []
+  },
+  {
+    "key": "numbers4",
+    "status": "ADDED",
+    "value1": null,
+    "value2": [4, 5, 6],
+    "children": []
+  },
+  {
+    "key": "obj1",
+    "status": "ADDED",
+    "value1": null,
+    "value2": {
+      "nestedKey": "value",
+      "isNested": true
+    },
+    "children": []
+  },
+  {
+    "key": "setting1",
+    "status": "CHANGED",
+    "value1": "Some value",
+    "value2": "Another value",
+    "children": []
+  },
+  {
+    "key": "setting2",
+    "status": "CHANGED",
+    "value1": 200,
+    "value2": 300,
+    "children": []
+  },
+  {
+    "key": "setting3",
+    "status": "CHANGED",
+    "value1": true,
+    "value2": "none",
+    "children": []
+  }
+]

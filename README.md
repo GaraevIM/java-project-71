@@ -16,6 +16,9 @@
 ## Пример вывода в формате plain
 [Сравнение файлов в формате plain](https://asciinema.org/a/tyqYTwHXuxa6Gn0o7yQIP436f)
 
+## Пример вывода в формате json
+[Сравнение файлов в формате json](https://asciinema.org/a/QUXKM189gRAeBe3b4mSeebaWh)
+
 ## Установка
 
 ```bash
