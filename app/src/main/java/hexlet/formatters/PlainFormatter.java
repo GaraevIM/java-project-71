@@ -1,7 +1,6 @@
 package hexlet.formatters;
 
 import hexlet.DiffNode;
-import hexlet.NodeStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
