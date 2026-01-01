@@ -29,6 +29,9 @@ public final class Differ {
         if (format == null || format.isBlank() || format.equals("stylish")) {
             return new StylishFormatter();
         }
+        if (format.equals("plain")) {
+            return new PlainFormatter();
+        }
         throw new IllegalArgumentException("Unknown format: " + format);
     }
 
