@@ -10,6 +10,9 @@
 ## Пример сравнения YAML-файлов
 [Сравнение плоских YAML-файлов](https://asciinema.org/a/vmVCseUbrsFY7Bk6Ln9T7KPwD)
 
+## Пример сравнения вложенных структур
+[Сравнение вложенных JSON и YAML файлов (stylish по умолчанию)](https://asciinema.org/a/zzLYlXR4XaRiD6ACo0ZatdawB)
+
 ## Установка
 
 ```bash
