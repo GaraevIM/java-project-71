@@ -21,14 +21,15 @@ CLI-утилита для сравнения двух файлов конфиг�
 ## Запуск
 
 ### После установки (installDist)
-`cd app && ./build/install/hexlet-git/bin/hexlet-git -h`  
-`cd app && ./build/install/hexlet-git/bin/hexlet-git filepath1.json filepath2.json`  
-`cd app && ./build/install/hexlet-git/bin/hexlet-git -f plain filepath1.yml filepath2.yml`  
-`cd app && ./build/install/hexlet-git/bin/hexlet-git -f json filepath1.json filepath2.json`
+`cd app && ./build/install/hexlet-git/bin/hexlet-git -h`
+`cd app && ./build/install/hexlet-git/bin/hexlet-git src/test/resources/fixtures/file1.json src/test/resources/fixtures/file2.json`
+`cd app && ./build/install/hexlet-git/bin/hexlet-git -f plain src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml`
+`cd app && ./build/install/hexlet-git/bin/hexlet-git -f json src/test/resources/fixtures/file1.json src/test/resources/fixtures/file2.json`
+
 
 ### Через Gradle
-`cd app && ./gradlew run --args="filepath1.yml filepath2.yml"`  
-`cd app && ./gradlew run --args="-f plain filepath1.yml filepath2.yml"`
+`cd app && ./gradlew run --args="src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml"`
+`cd app && ./gradlew run --args="-f plain src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml"`
 
 ## Разработка
 `cd app && make test`  
@@ -48,4 +49,3 @@ CLI-утилита для сравнения двух файлов конфиг�
 
 ## Пример вывода в формате json
 [Сравнение файлов в формате json](https://asciinema.org/a/QUXKM189gRAeBe3b4mSeebaWh)
-
