@@ -1,8 +1,8 @@
 # Вычислитель отличий (gendiff)
 
 [![CI](https://github.com/GaraevIM/java-project-71/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/GaraevIM/java-project-71/actions/workflows/gradle.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GaraevIM_hexlet-git&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=GaraevIM_hexlet-git)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GaraevIM_hexlet-git&metric=coverage)](https://sonarcloud.io/summary/new_code?id=GaraevIM_hexlet-git)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GaraevIM_java-project-71&metric=alert_status)](https://sonarcloud.io/project/overview?id=GaraevIM_java-project-71)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GaraevIM_java-project-71&metric=coverage)](https://sonarcloud.io/project/overview?id=GaraevIM_java-project-71)
 
 CLI-утилита для сравнения двух файлов конфигурации и вывода различий. Поддерживает форматы **JSON** и **YAML**, умеет сравнивать вложенные структуры и выводить результат в нескольких форматах.
 
