@@ -1,7 +1,6 @@
 import org.gradle.api.plugins.quality.Checkstyle
 
 plugins {
-    id("java")
     id("application")
     id("checkstyle")
     jacoco

@@ -16,24 +16,35 @@ CLI-утилита для сравнения двух файлов конфиг�
 - (Опционально) `make`
 
 ## Установка
-`cd app && make install`
+```bash
+cd app
+make install
+```
 
 ## Запуск
 
 ### После установки (installDist)
-`cd app && ./build/install/hexlet-git/bin/hexlet-git -h`
-`cd app && ./build/install/hexlet-git/bin/hexlet-git src/test/resources/fixtures/file1.json src/test/resources/fixtures/file2.json`
-`cd app && ./build/install/hexlet-git/bin/hexlet-git -f plain src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml`
-`cd app && ./build/install/hexlet-git/bin/hexlet-git -f json src/test/resources/fixtures/file1.json src/test/resources/fixtures/file2.json`
-
+```bash
+cd app
+./build/install/hexlet-git/bin/hexlet-git -h
+./build/install/hexlet-git/bin/hexlet-git src/test/resources/fixtures/file1.json src/test/resources/fixtures/file2.json
+./build/install/hexlet-git/bin/hexlet-git -f plain src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml
+./build/install/hexlet-git/bin/hexlet-git -f json src/test/resources/fixtures/file1.json src/test/resources/fixtures/file2.json
+```
 
 ### Через Gradle
-`cd app && ./gradlew run --args="src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml"`
-`cd app && ./gradlew run --args="-f plain src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml"`
+```bash
+cd app
+./gradlew run --args="src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml"
+./gradlew run --args="-f plain src/test/resources/fixtures/file1.yml src/test/resources/fixtures/file2.yml"
+```
 
 ## Разработка
-`cd app && make test`  
-`cd app && make build`
+```bash
+cd app
+make test
+make build
+```
 
 ## Демонстрация работы
 [Вычислитель отличий](https://asciinema.org/a/FJSDghOpGWzQoJaI9J0puiqlQ)
