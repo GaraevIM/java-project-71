@@ -4,6 +4,7 @@ import hexlet.formatters.DiffFormatter;
 import hexlet.formatters.JsonFormatter;
 import hexlet.formatters.PlainFormatter;
 import hexlet.formatters.StylishFormatter;
+
 import java.util.List;
 
 public final class Formatter {
@@ -17,15 +18,13 @@ public final class Formatter {
     }
 
     private static DiffFormatter getFormatter(String formatName) {
-        if (formatName == null || formatName.isBlank() || formatName.equals("stylish")) {
-            return new StylishFormatter();
-        }
-        if (formatName.equals("plain")) {
-            return new PlainFormatter();
-        }
-        if (formatName.equals("json")) {
-            return new JsonFormatter();
-        }
-        throw new IllegalArgumentException("Unknown format: " + formatName);
+        String normalized = (formatName == null) ? "" : formatName.trim();
+
+        return switch (normalized) {
+            case "", "stylish" -> new StylishFormatter();
+            case "plain" -> new PlainFormatter();
+            case "json" -> new JsonFormatter();
+            default -> throw new IllegalArgumentException("Unknown format: " + formatName);
+        };
     }
 }
