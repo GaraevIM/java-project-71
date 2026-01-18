@@ -4,7 +4,6 @@ import hexlet.formatters.DiffFormatter;
 import hexlet.formatters.JsonFormatter;
 import hexlet.formatters.PlainFormatter;
 import hexlet.formatters.StylishFormatter;
-
 import java.util.List;
 
 public final class Formatter {
