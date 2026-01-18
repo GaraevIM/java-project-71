@@ -19,8 +19,8 @@ class DifferTest {
                 .normalize();
     }
 
-    private String read(Path path) throws IOException {
-        return Files.readString(path).replace("\r\n", "\n");
+    private String read(Path path) throws Exception {
+        return Files.readString(path);
     }
 
     @Test
@@ -30,9 +30,7 @@ class DifferTest {
         Path expectedPath = getFixturePath("expected.txt");
 
         String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString())
-                .replace("\r\n", "\n")
-                .trim();
+        String actual = Differ.generate(first.toString(), second.toString()).trim();
 
         assertEquals(expected, actual);
     }
@@ -44,9 +42,7 @@ class DifferTest {
         Path expectedPath = getFixturePath("expected.txt");
 
         String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString(), "stylish")
-                .replace("\r\n", "\n")
-                .trim();
+        String actual = Differ.generate(first.toString(), second.toString(), "stylish").trim();
 
         assertEquals(expected, actual);
     }
@@ -58,9 +54,7 @@ class DifferTest {
         Path expectedPath = getFixturePath("expected_plain.txt");
 
         String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString(), "plain")
-                .replace("\r\n", "\n")
-                .trim();
+        String actual = Differ.generate(first.toString(), second.toString(), "plain").trim();
 
         assertEquals(expected, actual);
     }
@@ -88,9 +82,7 @@ class DifferTest {
         Path expectedPath = getFixturePath("expected.txt");
 
         String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString())
-                .replace("\r\n", "\n")
-                .trim();
+        String actual = Differ.generate(first.toString(), second.toString()).trim();
 
         assertEquals(expected, actual);
     }
@@ -102,9 +94,7 @@ class DifferTest {
         Path expectedPath = getFixturePath("expected.txt");
 
         String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString(), "stylish")
-                .replace("\r\n", "\n")
-                .trim();
+        String actual = Differ.generate(first.toString(), second.toString(), "stylish").trim();
 
         assertEquals(expected, actual);
     }
@@ -116,9 +106,7 @@ class DifferTest {
         Path expectedPath = getFixturePath("expected_plain.txt");
 
         String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString(), "plain")
-                .replace("\r\n", "\n")
-                .trim();
+        String actual = Differ.generate(first.toString(), second.toString(), "plain").trim();
 
         assertEquals(expected, actual);
     }
