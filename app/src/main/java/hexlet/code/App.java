@@ -28,10 +28,15 @@ public class App implements Callable<Integer> {
     private String filepath2;
 
     @Override
-    public Integer call() throws Exception {
-        String diff = Differ.generate(filepath1, filepath2, format);
-        System.out.println(diff);
-        return 0;
+    public Integer call() {
+        try {
+            String diff = Differ.generate(filepath1, filepath2, format);
+            System.out.println(diff);
+            return 0;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return 1;
+        }
     }
 
     public static void main(String[] args) {

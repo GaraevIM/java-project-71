@@ -11,11 +11,7 @@ public final class JsonFormatter implements DiffFormatter {
             .enable(SerializationFeature.INDENT_OUTPUT);
 
     @Override
-    public String format(List<DiffNode> tree) {
-        try {
-            return MAPPER.writeValueAsString(tree);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to format diff as json", e);
-        }
+    public String format(List<DiffNode> tree) throws Exception {
+        return MAPPER.writeValueAsString(tree);
     }
 }

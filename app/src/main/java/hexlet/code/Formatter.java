@@ -11,7 +11,7 @@ public final class Formatter {
     private Formatter() {
     }
 
-    public static String format(List<DiffNode> tree, String formatName) {
+    public static String format(List<DiffNode> tree, String formatName) throws Exception {
         DiffFormatter formatter = getFormatter(formatName);
         return formatter.format(tree);
     }
