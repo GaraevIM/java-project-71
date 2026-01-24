@@ -1,8 +1,8 @@
-package hexlet.formatters;
+package hexlet.code.formatters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import hexlet.DiffNode;
+import hexlet.code.DiffNode;
 import java.util.List;
 
 public final class JsonFormatter implements DiffFormatter {

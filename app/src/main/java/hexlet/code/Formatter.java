@@ -1,9 +1,9 @@
-package hexlet;
+package hexlet.code;
 
-import hexlet.formatters.DiffFormatter;
-import hexlet.formatters.JsonFormatter;
-import hexlet.formatters.PlainFormatter;
-import hexlet.formatters.StylishFormatter;
+import hexlet.code.formatters.DiffFormatter;
+import hexlet.code.formatters.JsonFormatter;
+import hexlet.code.formatters.PlainFormatter;
+import hexlet.code.formatters.StylishFormatter;
 import java.util.List;
 
 public final class Formatter {

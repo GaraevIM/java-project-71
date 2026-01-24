@@ -1,6 +1,6 @@
-package hexlet.formatters;
+package hexlet.code.formatters;
 
-import hexlet.DiffNode;
+import hexlet.code.DiffNode;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;

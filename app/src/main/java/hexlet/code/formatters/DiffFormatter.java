@@ -1,6 +1,6 @@
-package hexlet.formatters;
+package hexlet.code.formatters;
 
-import hexlet.DiffNode;
+import hexlet.code.DiffNode;
 import java.util.List;
 
 public interface DiffFormatter {
