@@ -28,8 +28,8 @@ class DifferTest {
         Path second = getFixturePath("file2.json");
         Path expectedPath = getFixturePath("expected.txt");
 
-        String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString()).trim();
+        String expected = read(expectedPath);
+        String actual = Differ.generate(first.toString(), second.toString());
 
         assertEquals(expected, actual);
     }
@@ -40,8 +40,8 @@ class DifferTest {
         Path second = getFixturePath("file2.json");
         Path expectedPath = getFixturePath("expected.txt");
 
-        String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString(), "stylish").trim();
+        String expected = read(expectedPath);
+        String actual = Differ.generate(first.toString(), second.toString(), "stylish");
 
         assertEquals(expected, actual);
     }
@@ -52,8 +52,8 @@ class DifferTest {
         Path second = getFixturePath("file2.json");
         Path expectedPath = getFixturePath("expected_plain.txt");
 
-        String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString(), "plain").trim();
+        String expected = read(expectedPath);
+        String actual = Differ.generate(first.toString(), second.toString(), "plain");
 
         assertEquals(expected, actual);
     }
@@ -80,8 +80,8 @@ class DifferTest {
         Path second = getFixturePath("file2.yml");
         Path expectedPath = getFixturePath("expected.txt");
 
-        String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString()).trim();
+        String expected = read(expectedPath);
+        String actual = Differ.generate(first.toString(), second.toString());
 
         assertEquals(expected, actual);
     }
@@ -92,8 +92,8 @@ class DifferTest {
         Path second = getFixturePath("file2.yml");
         Path expectedPath = getFixturePath("expected.txt");
 
-        String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString(), "stylish").trim();
+        String expected = read(expectedPath);
+        String actual = Differ.generate(first.toString(), second.toString(), "stylish");
 
         assertEquals(expected, actual);
     }
@@ -104,8 +104,8 @@ class DifferTest {
         Path second = getFixturePath("file2.yml");
         Path expectedPath = getFixturePath("expected_plain.txt");
 
-        String expected = read(expectedPath).trim();
-        String actual = Differ.generate(first.toString(), second.toString(), "plain").trim();
+        String expected = read(expectedPath);
+        String actual = Differ.generate(first.toString(), second.toString(), "plain");
 
         assertEquals(expected, actual);
     }
