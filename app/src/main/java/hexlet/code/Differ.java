@@ -36,11 +36,10 @@ public final class Differ {
 
     private static String detectType(String sourcePath) {
         String name = Path.of(sourcePath).getFileName().toString().toLowerCase();
-
-        if (name.endsWith(".yml") || name.endsWith(".yaml")) {
-            return "yaml";
+        int dotIndex = name.lastIndexOf('.');
+        if (dotIndex == -1 || dotIndex == name.length() - 1) {
+            return "";
         }
-
-        return "json";
+        return name.substring(dotIndex + 1);
     }
 }
