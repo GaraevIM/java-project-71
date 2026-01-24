@@ -1,6 +1,8 @@
 package hexlet.code.formatters;
 
 import hexlet.code.DiffNode;
+import hexlet.code.NodeStatus;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -9,31 +11,33 @@ public final class PlainFormatter implements DiffFormatter {
 
     @Override
     public String format(List<DiffNode> tree) {
-        String result = render(tree, "");
-        return result.trim();
+        List<String> lines = renderLines(tree, "");
+        return String.join("\n", lines);
     }
 
-    private String render(List<DiffNode> nodes, String path) {
-        StringBuilder sb = new StringBuilder();
+    private List<String> renderLines(List<DiffNode> nodes, String path) {
+        List<String> lines = new ArrayList<>();
 
         for (DiffNode node : nodes) {
             String propertyPath = path.isEmpty() ? node.key() : path + "." + node.key();
+            NodeStatus status = node.status();
 
-            switch (node.status()) {
-                case NESTED -> sb.append(render(node.children(), propertyPath));
-                case ADDED -> sb.append("Property '").append(propertyPath).append("' was added with value: ")
-                        .append(formatValue(node.value2())).append("\n");
-                case REMOVED -> sb.append("Property '").append(propertyPath).append("' was removed").append("\n");
-                case CHANGED -> sb.append("Property '").append(propertyPath).append("' was updated. From ")
-                        .append(formatValue(node.value1())).append(" to ").append(formatValue(node.value2()))
-                        .append("\n");
-                case UNCHANGED -> {
-                }
-                default -> throw new IllegalStateException("Unknown status: " + node.status());
+            if (status == NodeStatus.NESTED) {
+                lines.addAll(renderLines(node.children(), propertyPath));
+                continue;
+            }
+
+            if (status == NodeStatus.ADDED) {
+                lines.add("Property '" + propertyPath + "' was added with value: " + formatValue(node.value2()));
+            } else if (status == NodeStatus.REMOVED) {
+                lines.add("Property '" + propertyPath + "' was removed");
+            } else if (status == NodeStatus.CHANGED) {
+                lines.add("Property '" + propertyPath + "' was updated. From " + formatValue(node.value1())
+                        + " to " + formatValue(node.value2()));
             }
         }
 
-        return sb.toString();
+        return lines;
     }
 
     private String formatValue(Object value) {
