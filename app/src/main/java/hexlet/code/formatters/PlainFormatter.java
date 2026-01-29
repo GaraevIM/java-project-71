@@ -1,9 +1,10 @@
 package hexlet.code.formatters;
 
-import hexlet.code.DiffNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import hexlet.code.DiffNode;
 
 public final class PlainFormatter implements DiffFormatter {
 
@@ -11,11 +12,9 @@ public final class PlainFormatter implements DiffFormatter {
     public String format(List<DiffNode> tree) {
         List<String> lines = new ArrayList<>();
         buildLines(tree, "", lines);
-
         if (lines.isEmpty()) {
             return "";
         }
-
         return String.join("\n", lines) + "\n";
     }
 
@@ -25,11 +24,23 @@ public final class PlainFormatter implements DiffFormatter {
 
             switch (node.status()) {
                 case NESTED -> buildLines(node.children(), property, lines);
-                case ADDED -> lines.add("Property '" + property + "' was added with value: " + formatValue(node.value2()));
-                case REMOVED -> lines.add("Property '" + property + "' was removed");
-                case CHANGED -> lines.add("Property '" + property + "' was updated. From " + formatValue(node.value1())
-                        + " to " + formatValue(node.value2()));
-                case UNCHANGED -> { }
+                case ADDED -> lines.add(String.format(
+                        "Property '%s' was added with value: %s",
+                        property,
+                        formatValue(node.value2())
+                ));
+                case REMOVED -> lines.add(String.format(
+                        "Property '%s' was removed",
+                        property
+                ));
+                case CHANGED -> lines.add(String.format(
+                        "Property '%s' was updated. From %s to %s",
+                        property,
+                        formatValue(node.value1()),
+                        formatValue(node.value2())
+                ));
+                case UNCHANGED -> {
+                }
                 default -> throw new IllegalStateException("Unknown status: " + node.status());
             }
         }
