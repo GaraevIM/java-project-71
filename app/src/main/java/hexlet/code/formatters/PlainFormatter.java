@@ -3,7 +3,6 @@ package hexlet.code.formatters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import hexlet.code.DiffNode;
 
 public final class PlainFormatter implements DiffFormatter {
