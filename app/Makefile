@@ -1,8 +1,8 @@
 .PHONY: setup build test run run-dist install clean
 
 setup:
-	chmod +x code/app/gradlew
-	cd code/app && ./gradlew clean install
+	pwd
+	ls -la
 
 build:
 	chmod +x gradlew
