@@ -6,31 +6,23 @@ else
 APP_DIR = code/app
 endif
 
-GRADLEW = $(APP_DIR)/gradlew
-
 setup:
-	chmod +x $(GRADLEW)
-	cd $(APP_DIR) && ./gradlew clean install
+	cd $(APP_DIR) && sh ./gradlew clean install
 
 build:
-	chmod +x $(GRADLEW)
-	cd $(APP_DIR) && ./gradlew build
+	cd $(APP_DIR) && sh ./gradlew build
 
 test:
-	chmod +x $(GRADLEW)
-	cd $(APP_DIR) && ./gradlew test
+	cd $(APP_DIR) && sh ./gradlew test
 
 run:
-	chmod +x $(GRADLEW)
-	cd $(APP_DIR) && ./gradlew run
+	cd $(APP_DIR) && sh ./gradlew run
 
 install:
-	chmod +x $(GRADLEW)
-	cd $(APP_DIR) && ./gradlew installDist
+	cd $(APP_DIR) && sh ./gradlew installDist
 
 run-dist: install
 	cd $(APP_DIR) && ./build/install/hexlet-git/bin/hexlet-git
 
 clean:
-	chmod +x $(GRADLEW)
-	cd $(APP_DIR) && ./gradlew clean
+	cd $(APP_DIR) && sh ./gradlew clean
