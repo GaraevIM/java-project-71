@@ -1,31 +1,30 @@
 .PHONY: setup build test run run-dist install clean
 
+APP_DIR := $(if $(wildcard code/app/gradlew),code/app,app)
+
 setup:
-	pwd
-	ls -la
-	ls -la app || true
-	ls -la code || true
-	ls -la code/app || true
+	chmod +x $(APP_DIR)/gradlew
+	cd $(APP_DIR) && ./gradlew clean install
 
 build:
-	chmod +x gradlew
-	./gradlew build
+	chmod +x $(APP_DIR)/gradlew
+	cd $(APP_DIR) && ./gradlew build
 
 test:
-	chmod +x gradlew
-	./gradlew test
+	chmod +x $(APP_DIR)/gradlew
+	cd $(APP_DIR) && ./gradlew test
 
 run:
-	chmod +x gradlew
-	./gradlew run
+	chmod +x $(APP_DIR)/gradlew
+	cd $(APP_DIR) && ./gradlew run
 
 install:
-	chmod +x gradlew
-	./gradlew installDist
+	chmod +x $(APP_DIR)/gradlew
+	cd $(APP_DIR) && ./gradlew installDist
 
 run-dist: install
-	./build/install/hexlet-git/bin/hexlet-git
+	./$(APP_DIR)/build/install/hexlet-git/bin/hexlet-git
 
 clean:
-	chmod +x gradlew
-	./gradlew clean
+	chmod +x $(APP_DIR)/gradlew
+	cd $(APP_DIR) && ./gradlew clean
