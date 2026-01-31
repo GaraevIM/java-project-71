@@ -1,23 +1,36 @@
-.PHONY: setup build test run run-dist install clean
+.PHONY: setup build test run install run-dist clean
+
+ifeq ($(wildcard code/app/gradlew),)
+APP_DIR = app
+else
+APP_DIR = code/app
+endif
+
+GRADLEW = $(APP_DIR)/gradlew
 
 setup:
-	cd app && chmod +x gradlew
-	cd app && ./gradlew clean install
+	chmod +x $(GRADLEW)
+	cd $(APP_DIR) && ./gradlew clean install
 
 build:
-	cd app && ./gradlew build
+	chmod +x $(GRADLEW)
+	cd $(APP_DIR) && ./gradlew build
 
 test:
-	cd app && ./gradlew test
+	chmod +x $(GRADLEW)
+	cd $(APP_DIR) && ./gradlew test
 
 run:
-	cd app && ./gradlew run
+	chmod +x $(GRADLEW)
+	cd $(APP_DIR) && ./gradlew run
 
 install:
-	cd app && ./gradlew installDist
+	chmod +x $(GRADLEW)
+	cd $(APP_DIR) && ./gradlew installDist
 
 run-dist: install
-	./app/build/install/hexlet-git/bin/hexlet-git
+	cd $(APP_DIR) && ./build/install/hexlet-git/bin/hexlet-git
 
 clean:
-	cd app && ./gradlew clean
+	chmod +x $(GRADLEW)
+	cd $(APP_DIR) && ./gradlew clean
