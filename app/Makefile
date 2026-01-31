@@ -1,16 +1,28 @@
-.PHONY: build run run-dist install clean
+.PHONY: setup build test run install run-dist clean
+
+setup:
+	chmod +x gradlew
+	sh ./gradlew clean install
 
 build:
-	.\gradlew build
+	chmod +x gradlew
+	sh ./gradlew build
+
+test:
+	chmod +x gradlew
+	sh ./gradlew test
 
 run:
-	.\gradlew run
+	chmod +x gradlew
+	sh ./gradlew run
 
 install:
-	.\gradlew installDist
+	chmod +x gradlew
+	sh ./gradlew installDist
 
 run-dist: install
-	./build/install/app/bin/app
+	./build/install/hexlet-git/bin/hexlet-git
 
 clean:
-	.\gradlew clean
+	chmod +x gradlew
+	sh ./gradlew clean
