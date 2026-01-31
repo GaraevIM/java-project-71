@@ -3,6 +3,9 @@
 setup:
 	pwd
 	ls -la
+	ls -la app || true
+	ls -la code || true
+	ls -la code/app || true
 
 build:
 	chmod +x gradlew
