@@ -43,6 +43,7 @@ tasks.register("install") {
 }
 
 tasks.test {
+    dependsOn("installDist")
     useJUnitPlatform()
 }
 
