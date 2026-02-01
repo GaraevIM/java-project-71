@@ -1,7 +1,7 @@
 .PHONY: setup build test run install run-dist clean
 
 setup:
-	sh ./gradlew clean install
+	sh ./gradlew clean installDist
 
 build:
 	sh ./gradlew build
@@ -13,7 +13,7 @@ run:
 	sh ./gradlew run
 
 install:
-	sh ./gradlew install
+	sh ./gradlew installDist
 
 run-dist:
 	sh ./gradlew run
