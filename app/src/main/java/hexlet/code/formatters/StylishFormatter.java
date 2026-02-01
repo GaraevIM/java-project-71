@@ -56,8 +56,8 @@ public final class StylishFormatter implements DiffFormatter {
             keys.add(String.valueOf(k));
         }
 
-        String innerIndent = " ".repeat((depth + 2) * INDENT_SIZE);
-        String closingIndent = " ".repeat((depth + 1) * INDENT_SIZE);
+        String innerIndent = " ".repeat((depth + 1) * INDENT_SIZE);
+        String closingIndent = " ".repeat(depth * INDENT_SIZE);
 
         StringBuilder sb = new StringBuilder();
         sb.append("{\n");
