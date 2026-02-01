@@ -1,9 +1,11 @@
 import org.gradle.api.plugins.quality.Checkstyle
+import org.gradle.api.publish.maven.MavenPublication
 
 plugins {
     id("application")
     id("checkstyle")
     jacoco
+    id("maven-publish")
     id("org.sonarqube") version "5.1.0.4882"
     id("com.github.ben-manes.versions") version "0.53.0"
 }
@@ -32,7 +34,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("hexlet.App")
+    mainClass.set("hexlet.code.App")
 }
 
 tasks.test {
@@ -82,4 +84,19 @@ sonarqube {
             "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml"
         )
     }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+tasks.register("install") {
+    dependsOn("publishToMavenLocal")
 }
