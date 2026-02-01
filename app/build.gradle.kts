@@ -56,3 +56,10 @@ checkstyle {
     toolVersion = "10.3.4"
     configFile = file("config/checkstyle/checkstyle.xml")
 }
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "GaraevIM_java-project-71")
+        property("sonar.organization", "garaevim")
+    }
+}
