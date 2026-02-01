@@ -2,7 +2,7 @@
 
 setup:
 	chmod +x gradlew
-	sh ./gradlew clean install
+	sh ./gradlew clean installDist
 
 build:
 	chmod +x gradlew
@@ -10,7 +10,7 @@ build:
 
 test:
 	chmod +x gradlew
-	sh ./gradlew test
+	sh ./gradlew installDist test
 
 run:
 	chmod +x gradlew
