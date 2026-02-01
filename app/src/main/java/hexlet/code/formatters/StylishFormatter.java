@@ -8,6 +8,7 @@ import java.util.TreeSet;
 public final class StylishFormatter implements DiffFormatter {
 
     private static final int INDENT_SIZE = 4;
+    private static final int SIGN_OFFSET = 2;
 
     @Override
     public String format(List<DiffNode> tree) {
@@ -22,20 +23,20 @@ public final class StylishFormatter implements DiffFormatter {
     }
 
     private String renderNode(DiffNode node, int depth) {
-        String lineIndent = " ".repeat(depth * INDENT_SIZE);
-        String signIndent = " ".repeat(depth * INDENT_SIZE - 2);
+        String currentIndent = " ".repeat(depth * INDENT_SIZE);
+        String signIndent = " ".repeat(depth * INDENT_SIZE - SIGN_OFFSET);
 
         return switch (node.status()) {
-            case UNCHANGED -> lineIndent + node.key() + ": " + formatValue(node.value1(), depth);
+            case UNCHANGED -> currentIndent + node.key() + ": " + formatValue(node.value1(), depth);
             case ADDED -> signIndent + "+ " + node.key() + ": " + formatValue(node.value2(), depth);
             case REMOVED -> signIndent + "- " + node.key() + ": " + formatValue(node.value1(), depth);
             case CHANGED -> signIndent + "- " + node.key() + ": " + formatValue(node.value1(), depth)
                     + "\n"
                     + signIndent + "+ " + node.key() + ": " + formatValue(node.value2(), depth);
-            case NESTED -> lineIndent + node.key() + ": {\n"
+            case NESTED -> currentIndent + node.key() + ": {\n"
                     + renderNodes(node.children(), depth + 1)
                     + "\n"
-                    + lineIndent + "}";
+                    + currentIndent + "}";
             default -> throw new IllegalStateException("Unexpected status: " + node.status());
         };
     }
@@ -52,11 +53,11 @@ public final class StylishFormatter implements DiffFormatter {
 
     private String formatMap(Map<?, ?> map, int depth) {
         var keys = new TreeSet<String>();
-        for (Object k : map.keySet()) {
-            keys.add(String.valueOf(k));
+        for (Object key : map.keySet()) {
+            keys.add(String.valueOf(key));
         }
 
-        String innerIndent = " ".repeat((depth + 1) * INDENT_SIZE);
+        String entryIndent = " ".repeat((depth + 1) * INDENT_SIZE);
         String closingIndent = " ".repeat(depth * INDENT_SIZE);
 
         StringBuilder sb = new StringBuilder();
@@ -70,14 +71,7 @@ public final class StylishFormatter implements DiffFormatter {
             first = false;
 
             Object v = map.get(key);
-            sb.append(innerIndent).append(key).append(": ");
-            if (v instanceof Map<?, ?> nested) {
-                sb.append(formatMap(nested, depth + 1));
-            } else if (v == null) {
-                sb.append("null");
-            } else {
-                sb.append(String.valueOf(v));
-            }
+            sb.append(entryIndent).append(key).append(": ").append(formatValue(v, depth + 1));
         }
 
         sb.append("\n").append(closingIndent).append("}");
