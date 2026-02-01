@@ -1,4 +1,4 @@
 * text=auto eol=lf
 *.bat text eol=crlf
-code/app/gradlew text eol=lf
-code/app/gradlew.bat text eol=crlf
+app/gradlew text eol=lf
+app/gradlew.bat text eol=crlf

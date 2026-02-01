@@ -1,27 +1,22 @@
 .PHONY: setup build test run install run-dist clean
 
-APP_DIR := app
-ifneq ($(wildcard code/app),)
-APP_DIR := code/app
-endif
-
 setup:
-	cd $(APP_DIR) && chmod +x gradlew && ./gradlew clean installDist
+	$(MAKE) -C app setup
 
 build:
-	cd $(APP_DIR) && chmod +x gradlew && ./gradlew build
+	$(MAKE) -C app build
 
 test:
-	cd $(APP_DIR) && chmod +x gradlew && ./gradlew test
+	$(MAKE) -C app test
 
 run:
-	cd $(APP_DIR) && chmod +x gradlew && ./gradlew run
+	$(MAKE) -C app run
 
 install:
-	cd $(APP_DIR) && chmod +x gradlew && ./gradlew installDist
+	$(MAKE) -C app install
 
-run-dist: install
-	cd $(APP_DIR) && ./build/install/app/bin/app
+run-dist:
+	$(MAKE) -C app run-dist
 
 clean:
-	cd $(APP_DIR) && chmod +x gradlew && ./gradlew clean
+	$(MAKE) -C app clean
