@@ -2,27 +2,27 @@
 
 setup:
 	chmod +x gradlew
-	sh ./gradlew clean installDist
+	./gradlew clean installDist
 
 build:
 	chmod +x gradlew
-	sh ./gradlew build
+	./gradlew build
 
-test:
+test: install
 	chmod +x gradlew
-	sh ./gradlew installDist test
+	./gradlew test
 
 run:
 	chmod +x gradlew
-	sh ./gradlew run
+	./gradlew run
 
 install:
 	chmod +x gradlew
-	sh ./gradlew installDist
+	./gradlew installDist
 
 run-dist: install
-	./build/install/hexlet-git/bin/hexlet-git
+	./build/install/app/bin/app
 
 clean:
 	chmod +x gradlew
-	sh ./gradlew clean
+	./gradlew clean
