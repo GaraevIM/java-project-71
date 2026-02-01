@@ -2,6 +2,8 @@ package hexlet.code.formatters;
 
 import hexlet.code.DiffNode;
 import java.util.List;
+import java.util.Map;
+import java.util.StringJoiner;
 
 public final class StylishFormatter implements DiffFormatter {
 
@@ -39,6 +41,32 @@ public final class StylishFormatter implements DiffFormatter {
     }
 
     private String formatValue(Object value) {
-        return value == null ? "null" : String.valueOf(value);
+        if (value == null) {
+            return "null";
+        }
+        if (value instanceof Map<?, ?> map) {
+            return formatMapInline(map);
+        }
+        return String.valueOf(value);
+    }
+
+    private String formatMapInline(Map<?, ?> map) {
+        StringJoiner joiner = new StringJoiner(", ", "{", "}");
+        for (var entry : map.entrySet()) {
+            String key = String.valueOf(entry.getKey());
+            Object rawValue = entry.getValue();
+
+            String formattedValue;
+            if (rawValue == null) {
+                formattedValue = "null";
+            } else if (rawValue instanceof Map<?, ?> nested) {
+                formattedValue = formatMapInline(nested);
+            } else {
+                formattedValue = String.valueOf(rawValue);
+            }
+
+            joiner.add(key + "=" + formattedValue);
+        }
+        return joiner.toString();
     }
 }
