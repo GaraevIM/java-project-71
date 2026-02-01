@@ -1,14 +1,14 @@
 package hexlet.code.formatters;
 
 import hexlet.code.DiffNode;
+
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
+import java.util.TreeMap;
 
 public final class StylishFormatter implements DiffFormatter {
 
     private static final int INDENT_SIZE = 4;
-
     private static final int SIGN_OFFSET = 2;
 
     @Override
@@ -38,7 +38,6 @@ public final class StylishFormatter implements DiffFormatter {
                     + renderNodes(node.children(), depth + 1)
                     + "\n"
                     + currentIndent + "}";
-            default -> throw new IllegalStateException("Unexpected status: " + node.status());
         };
     }
 
@@ -53,9 +52,9 @@ public final class StylishFormatter implements DiffFormatter {
     }
 
     private String formatMap(Map<?, ?> map, int depth) {
-        var keys = new TreeSet<String>();
-        for (Object key : map.keySet()) {
-            keys.add(String.valueOf(key));
+        Map<String, Object> sorted = new TreeMap<>();
+        for (var entry : map.entrySet()) {
+            sorted.put(String.valueOf(entry.getKey()), entry.getValue());
         }
 
         String entryIndent = " ".repeat((depth + 1) * INDENT_SIZE);
@@ -64,18 +63,13 @@ public final class StylishFormatter implements DiffFormatter {
         StringBuilder sb = new StringBuilder();
         sb.append("{\n");
 
-        boolean first = true;
-        for (String key : keys) {
-            if (!first) {
-                sb.append("\n");
-            }
-            first = false;
+        var lines = sorted.entrySet().stream()
+                .map(e -> entryIndent + e.getKey() + ": " + formatValue(e.getValue(), depth + 1))
+                .toList();
 
-            Object v = map.get(key);
-            sb.append(entryIndent).append(key).append(": ").append(formatValue(v, depth + 1));
-        }
-
+        sb.append(String.join("\n", lines));
         sb.append("\n").append(closingIndent).append("}");
+
         return sb.toString();
     }
 }
