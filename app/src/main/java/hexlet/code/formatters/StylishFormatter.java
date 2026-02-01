@@ -3,7 +3,7 @@ package hexlet.code.formatters;
 import hexlet.code.DiffNode;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
+import java.util.TreeSet;
 
 public final class StylishFormatter implements DiffFormatter {
 
@@ -26,12 +26,12 @@ public final class StylishFormatter implements DiffFormatter {
         String signIndent = " ".repeat(depth * INDENT_SIZE - 2);
 
         return switch (node.status()) {
-            case UNCHANGED -> lineIndent + node.key() + ": " + formatValue(node.value1());
-            case ADDED -> signIndent + "+ " + node.key() + ": " + formatValue(node.value2());
-            case REMOVED -> signIndent + "- " + node.key() + ": " + formatValue(node.value1());
-            case CHANGED -> signIndent + "- " + node.key() + ": " + formatValue(node.value1())
+            case UNCHANGED -> lineIndent + node.key() + ": " + formatValue(node.value1(), depth);
+            case ADDED -> signIndent + "+ " + node.key() + ": " + formatValue(node.value2(), depth);
+            case REMOVED -> signIndent + "- " + node.key() + ": " + formatValue(node.value1(), depth);
+            case CHANGED -> signIndent + "- " + node.key() + ": " + formatValue(node.value1(), depth)
                     + "\n"
-                    + signIndent + "+ " + node.key() + ": " + formatValue(node.value2());
+                    + signIndent + "+ " + node.key() + ": " + formatValue(node.value2(), depth);
             case NESTED -> lineIndent + node.key() + ": {\n"
                     + renderNodes(node.children(), depth + 1)
                     + "\n"
@@ -40,33 +40,47 @@ public final class StylishFormatter implements DiffFormatter {
         };
     }
 
-    private String formatValue(Object value) {
+    private String formatValue(Object value, int depth) {
         if (value == null) {
             return "null";
         }
         if (value instanceof Map<?, ?> map) {
-            return formatMapInline(map);
+            return formatMap(map, depth);
         }
         return String.valueOf(value);
     }
 
-    private String formatMapInline(Map<?, ?> map) {
-        StringJoiner joiner = new StringJoiner(", ", "{", "}");
-        for (var entry : map.entrySet()) {
-            String key = String.valueOf(entry.getKey());
-            Object rawValue = entry.getValue();
-
-            String formattedValue;
-            if (rawValue == null) {
-                formattedValue = "null";
-            } else if (rawValue instanceof Map<?, ?> nested) {
-                formattedValue = formatMapInline(nested);
-            } else {
-                formattedValue = String.valueOf(rawValue);
-            }
-
-            joiner.add(key + "=" + formattedValue);
+    private String formatMap(Map<?, ?> map, int depth) {
+        var keys = new TreeSet<String>();
+        for (Object k : map.keySet()) {
+            keys.add(String.valueOf(k));
         }
-        return joiner.toString();
+
+        String innerIndent = " ".repeat((depth + 2) * INDENT_SIZE);
+        String closingIndent = " ".repeat((depth + 1) * INDENT_SIZE);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("{\n");
+
+        boolean first = true;
+        for (String key : keys) {
+            if (!first) {
+                sb.append("\n");
+            }
+            first = false;
+
+            Object v = map.get(key);
+            sb.append(innerIndent).append(key).append(": ");
+            if (v instanceof Map<?, ?> nested) {
+                sb.append(formatMap(nested, depth + 1));
+            } else if (v == null) {
+                sb.append("null");
+            } else {
+                sb.append(String.valueOf(v));
+            }
+        }
+
+        sb.append("\n").append(closingIndent).append("}");
+        return sb.toString();
     }
 }
