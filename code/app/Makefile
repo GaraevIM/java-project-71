@@ -1,22 +1,22 @@
 .PHONY: setup build test run install run-dist clean
 
 setup:
-	sh ./gradlew clean installDist
+	chmod +x gradlew && ./gradlew clean installDist
 
 build:
-	sh ./gradlew build
+	chmod +x gradlew && ./gradlew build
 
 test:
-	sh ./gradlew test
+	chmod +x gradlew && ./gradlew test
 
 run:
-	sh ./gradlew run
+	chmod +x gradlew && ./gradlew run
 
 install:
-	sh ./gradlew installDist
+	chmod +x gradlew && ./gradlew installDist
 
-run-dist:
-	sh ./gradlew run
+run-dist: install
+	./build/install/app/bin/app
 
 clean:
-	sh ./gradlew clean
+	chmod +x gradlew && ./gradlew clean
