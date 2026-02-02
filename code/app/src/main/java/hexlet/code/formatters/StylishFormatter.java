@@ -1,7 +1,6 @@
 package hexlet.code.formatters;
 
 import hexlet.code.DiffNode;
-
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -9,6 +8,7 @@ import java.util.TreeMap;
 public final class StylishFormatter implements DiffFormatter {
 
     private static final int INDENT_SIZE = 4;
+
     private static final int SIGN_OFFSET = 2;
 
     @Override
