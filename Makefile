@@ -1,6 +1,6 @@
 .PHONY: setup build test run install run-dist clean
 
-APP_DIR := code/app
+APP_DIR := app
 
 setup:
 	cd $(APP_DIR) && chmod +x gradlew && ./gradlew clean installDist
