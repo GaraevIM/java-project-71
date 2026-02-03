@@ -1,22 +1,24 @@
 .PHONY: setup build test run install run-dist clean
 
+APP_DIR := code/app
+
 setup:
-	cd app && make setup
+	cd $(APP_DIR) && chmod +x gradlew && ./gradlew clean installDist
 
 build:
-	cd app && make build
+	cd $(APP_DIR) && chmod +x gradlew && ./gradlew build
 
 test:
-	cd app && make test
+	cd $(APP_DIR) && chmod +x gradlew && ./gradlew test
 
 run:
-	cd app && make run
+	cd $(APP_DIR) && chmod +x gradlew && ./gradlew run
 
 install:
-	cd app && make install
+	cd $(APP_DIR) && chmod +x gradlew && ./gradlew installDist
 
-run-dist:
-	cd app && make run-dist
+run-dist: install
+	cd $(APP_DIR) && ./build/install/app/bin/app
 
 clean:
-	cd app && make clean
+	cd $(APP_DIR) && ./gradlew clean
