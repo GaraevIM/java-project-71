@@ -1,6 +1,7 @@
 package hexlet.code.formatters;
 
 import hexlet.code.DiffNode;
+import hexlet.code.NodeStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,36 +12,24 @@ public final class PlainFormatter implements DiffFormatter {
     public String format(List<DiffNode> tree) {
         List<String> lines = new ArrayList<>();
         buildLines(tree, "", lines);
-        if (lines.isEmpty()) {
-            return "";
-        }
-        return String.join("\n", lines) + "\n";
+        return String.join("\n", lines);
     }
 
-    private void buildLines(List<DiffNode> nodes, String path, List<String> lines) {
+    private void buildLines(List<DiffNode> nodes, String parentPath, List<String> lines) {
         for (DiffNode node : nodes) {
-            String property = path.isEmpty() ? node.key() : path + "." + node.key();
+            String propertyPath = parentPath.isEmpty() ? node.key() : parentPath + "." + node.key();
+            NodeStatus status = node.status();
 
-            switch (node.status()) {
-                case NESTED -> buildLines(node.children(), property, lines);
-                case ADDED -> lines.add(String.format(
-                        "Property '%s' was added with value: %s",
-                        property,
-                        formatValue(node.value2())
-                ));
-                case REMOVED -> lines.add(String.format(
-                        "Property '%s' was removed",
-                        property
-                ));
-                case CHANGED -> lines.add(String.format(
-                        "Property '%s' was updated. From %s to %s",
-                        property,
-                        formatValue(node.value1()),
-                        formatValue(node.value2())
-                ));
+            switch (status) {
+                case NESTED -> buildLines(node.children(), propertyPath, lines);
+                case ADDED -> lines.add("Property '" + propertyPath + "' was added with value: " + formatValue(node.value2()));
+                case REMOVED -> lines.add("Property '" + propertyPath + "' was removed");
+                case CHANGED -> lines.add("Property '" + propertyPath + "' was updated. From "
+                        + formatValue(node.value1()) + " to " + formatValue(node.value2()));
                 case UNCHANGED -> {
                 }
-                default -> throw new IllegalStateException("Unknown status: " + node.status());
+                default -> {
+                }
             }
         }
     }
@@ -49,7 +38,7 @@ public final class PlainFormatter implements DiffFormatter {
         if (value == null) {
             return "null";
         }
-        if (value instanceof Map || value instanceof List) {
+        if (value instanceof Map<?, ?> || value instanceof List<?>) {
             return "[complex value]";
         }
         if (value instanceof String s) {
