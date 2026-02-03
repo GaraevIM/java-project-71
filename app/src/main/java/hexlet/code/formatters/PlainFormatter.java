@@ -17,21 +17,34 @@ public final class PlainFormatter implements DiffFormatter {
 
     private void buildLines(List<DiffNode> nodes, String parentPath, List<String> lines) {
         for (DiffNode node : nodes) {
-            String propertyPath = parentPath.isEmpty() ? node.key() : parentPath + "." + node.key();
+            String propertyPath = parentPath.isEmpty()
+                    ? node.key()
+                    : parentPath + "." + node.key();
+
             NodeStatus status = node.status();
 
             switch (status) {
                 case NESTED -> buildLines(node.children(), propertyPath, lines);
-                case ADDED -> lines.add("Property '" + propertyPath + "' was added with value: " + formatValue(node.value2()));
+                case ADDED -> lines.add(addedLine(propertyPath, node.value2()));
                 case REMOVED -> lines.add("Property '" + propertyPath + "' was removed");
-                case CHANGED -> lines.add("Property '" + propertyPath + "' was updated. From "
-                        + formatValue(node.value1()) + " to " + formatValue(node.value2()));
+                case CHANGED -> lines.add(changedLine(propertyPath, node.value1(), node.value2()));
                 case UNCHANGED -> {
                 }
                 default -> {
                 }
             }
         }
+    }
+
+    private String addedLine(String path, Object value) {
+        return "Property '" + path + "' was added with value: " + formatValue(value);
+    }
+
+    private String changedLine(String path, Object before, Object after) {
+        return "Property '" + path + "' was updated. From "
+                + formatValue(before)
+                + " to "
+                + formatValue(after);
     }
 
     private String formatValue(Object value) {

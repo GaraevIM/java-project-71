@@ -3,6 +3,7 @@ package hexlet.code.formatters;
 import hexlet.code.DiffNode;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class StylishFormatter implements DiffFormatter {
 
@@ -17,8 +18,7 @@ public final class StylishFormatter implements DiffFormatter {
     private String renderNodes(List<DiffNode> nodes, int depth) {
         return nodes.stream()
                 .map(node -> renderNode(node, depth))
-                .reduce((a, b) -> a + "\n" + b)
-                .orElse("");
+                .collect(Collectors.joining("\n"));
     }
 
     private String renderNode(DiffNode node, int depth) {
@@ -43,9 +43,16 @@ public final class StylishFormatter implements DiffFormatter {
         if (value == null) {
             return "null";
         }
-        if (value instanceof Map<?, ?>) {
-            return value.toString();
+        if (value instanceof Map<?, ?> map) {
+            return formatInlineMap(map);
         }
         return String.valueOf(value);
+    }
+
+    private String formatInlineMap(Map<?, ?> map) {
+        String body = map.entrySet().stream()
+                .map(e -> String.valueOf(e.getKey()) + "=" + String.valueOf(e.getValue()))
+                .collect(Collectors.joining(", "));
+        return "{" + body + "}";
     }
 }
