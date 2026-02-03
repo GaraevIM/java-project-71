@@ -45,11 +45,14 @@ tasks.register("install") {
 tasks.test {
     dependsOn("installDist")
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.jacocoTestReport {
+    dependsOn(tasks.test)
     reports {
         xml.required.set(true)
+        html.required.set(true)
     }
 }
 
@@ -62,5 +65,6 @@ sonarqube {
     properties {
         property("sonar.projectKey", "GaraevIM_java-project-71")
         property("sonar.organization", "garaevim")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
