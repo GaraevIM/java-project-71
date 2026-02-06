@@ -1,50 +1,43 @@
 package hexlet.code.formatters;
 
 import hexlet.code.DiffNode;
-import hexlet.code.NodeStatus;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class PlainFormatter implements DiffFormatter {
 
     @Override
     public String format(List<DiffNode> tree) {
-        List<String> lines = new ArrayList<>();
-        buildLines(tree, "", lines);
-        return String.join("\n", lines);
+        return renderNodes(tree, "");
     }
 
-    private void buildLines(List<DiffNode> nodes, String parentPath, List<String> lines) {
-        for (DiffNode node : nodes) {
-            String propertyPath = parentPath.isEmpty()
-                    ? node.key()
-                    : parentPath + "." + node.key();
+    private String renderNodes(List<DiffNode> nodes, String path) {
+        return nodes.stream()
+                .flatMap(node -> renderNode(node, path).stream())
+                .collect(Collectors.joining("\n"));
+    }
 
-            NodeStatus status = node.status();
+    private List<String> renderNode(DiffNode node, String path) {
+        String currentPath = path.isEmpty() ? node.key() : path + "." + node.key();
 
-            switch (status) {
-                case NESTED -> buildLines(node.children(), propertyPath, lines);
-                case ADDED -> lines.add(addedLine(propertyPath, node.value2()));
-                case REMOVED -> lines.add("Property '" + propertyPath + "' was removed");
-                case CHANGED -> lines.add(changedLine(propertyPath, node.value1(), node.value2()));
-                case UNCHANGED -> {
-                }
-                default -> {
-                }
+        return switch (node.status()) {
+            case NESTED -> {
+                String nested = renderNodes(node.children(), currentPath);
+                yield nested.isEmpty() ? List.of() : List.of(nested);
             }
-        }
-    }
-
-    private String addedLine(String path, Object value) {
-        return "Property '" + path + "' was added with value: " + formatValue(value);
-    }
-
-    private String changedLine(String path, Object before, Object after) {
-        return "Property '" + path + "' was updated. From "
-                + formatValue(before)
-                + " to "
-                + formatValue(after);
+            case ADDED -> List.of(
+                    "Property '" + currentPath + "' was added with value: " + formatValue(node.value2())
+            );
+            case REMOVED -> List.of(
+                    "Property '" + currentPath + "' was removed"
+            );
+            case CHANGED -> List.of(
+                    "Property '" + currentPath + "' was updated. From "
+                            + formatValue(node.value1()) + " to " + formatValue(node.value2())
+            );
+            case UNCHANGED -> List.of();
+        };
     }
 
     private String formatValue(Object value) {

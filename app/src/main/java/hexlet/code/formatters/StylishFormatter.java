@@ -3,12 +3,10 @@ package hexlet.code.formatters;
 import hexlet.code.DiffNode;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public final class StylishFormatter implements DiffFormatter {
 
     private static final int INDENT_SIZE = 4;
-
     private static final int SIGN_OFFSET = 2;
 
     @Override
@@ -19,7 +17,8 @@ public final class StylishFormatter implements DiffFormatter {
     private String renderNodes(List<DiffNode> nodes, int depth) {
         return nodes.stream()
                 .map(node -> renderNode(node, depth))
-                .collect(Collectors.joining("\n"));
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("");
     }
 
     private String renderNode(DiffNode node, int depth) {
@@ -51,9 +50,33 @@ public final class StylishFormatter implements DiffFormatter {
     }
 
     private String formatInlineMap(Map<?, ?> map) {
-        String body = map.entrySet().stream()
-                .map(e -> String.valueOf(e.getKey()) + "=" + String.valueOf(e.getValue()))
-                .collect(Collectors.joining(", "));
-        return "{" + body + "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        boolean first = true;
+
+        for (var entry : map.entrySet()) {
+            if (!first) {
+                sb.append(", ");
+            }
+            first = false;
+
+            String key = String.valueOf(entry.getKey());
+            Object val = entry.getValue();
+
+            sb.append(key).append("=").append(formatInlineMapValue(val));
+        }
+
+        sb.append("}");
+        return sb.toString();
+    }
+
+    private String formatInlineMapValue(Object value) {
+        if (value == null) {
+            return "null";
+        }
+        if (value instanceof Map<?, ?> m) {
+            return formatInlineMap(m);
+        }
+        return String.valueOf(value);
     }
 }
