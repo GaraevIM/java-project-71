@@ -9,7 +9,8 @@ public final class PlainFormatter implements DiffFormatter {
 
     @Override
     public String format(List<DiffNode> tree) {
-        return renderNodes(tree, "");
+        String result = renderNodes(tree, "");
+        return result.isEmpty() ? "" : result + "\n";
     }
 
     private String renderNodes(List<DiffNode> nodes, String path) {
