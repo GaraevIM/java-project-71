@@ -25,10 +25,10 @@ public final class DiffTreeBuilder {
             Object v2 = m2.get(key);
 
             if (in1 && in2) {
-                if (v1 instanceof Map<?, ?> map1 && v2 instanceof Map<?, ?> map2) {
-                    result.add(new DiffNode(key, NodeStatus.NESTED, null, null, build(castMap(map1), castMap(map2))));
-                } else if (Objects.equals(v1, v2)) {
+                if (Objects.equals(v1, v2)) {
                     result.add(new DiffNode(key, NodeStatus.UNCHANGED, v1, null, List.of()));
+                } else if (v1 instanceof Map<?, ?> map1 && v2 instanceof Map<?, ?> map2) {
+                    result.add(new DiffNode(key, NodeStatus.NESTED, null, null, build(castMap(map1), castMap(map2))));
                 } else {
                     result.add(new DiffNode(key, NodeStatus.CHANGED, v1, v2, List.of()));
                 }
