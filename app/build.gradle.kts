@@ -1,5 +1,6 @@
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
+import java.nio.file.attribute.PosixFilePermission
 
 plugins {
     application
@@ -53,16 +54,31 @@ tasks.register("prepareCliBinary") {
         Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING)
 
         try {
-            to.toFile().setExecutable(true)
+            Files.setPosixFilePermissions(
+                to,
+                setOf(
+                    PosixFilePermission.OWNER_READ,
+                    PosixFilePermission.OWNER_WRITE,
+                    PosixFilePermission.OWNER_EXECUTE,
+                    PosixFilePermission.GROUP_READ,
+                    PosixFilePermission.GROUP_EXECUTE,
+                    PosixFilePermission.OTHERS_READ,
+                    PosixFilePermission.OTHERS_EXECUTE
+                )
+            )
         } catch (_: Exception) {
+            to.toFile().setExecutable(true)
         }
     }
 }
 
 tasks.test {
-    dependsOn("prepareCliBinary")
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
+}
+
+rootProject.tasks.named("test") {
+    dependsOn(tasks.named("prepareCliBinary"))
 }
 
 tasks.jacocoTestReport {
