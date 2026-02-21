@@ -1,3 +1,5 @@
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import org.gradle.api.plugins.quality.Checkstyle
 
 plugins {
@@ -48,12 +50,8 @@ tasks.register("prepareCliBinary") {
         val from = layout.projectDirectory.file("build/install/app/bin/app").asFile.toPath()
         val to = layout.projectDirectory.file("../code/app/build/install/app/bin/app").asFile.toPath()
 
-        java.nio.file.Files.createDirectories(to.parent)
-        java.nio.file.Files.copy(
-            from,
-            to,
-            java.nio.file.StandardCopyOption.REPLACE_EXISTING
-        )
+        Files.createDirectories(to.parent)
+        Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING)
         try {
             to.toFile().setExecutable(true)
         } catch (_: Exception) {
