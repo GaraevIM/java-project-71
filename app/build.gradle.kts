@@ -1,3 +1,6 @@
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
 plugins {
     application
     checkstyle
@@ -40,8 +43,21 @@ tasks.register("install") {
     dependsOn("publishToMavenLocal")
 }
 
-tasks.test {
+tasks.register("prepareCliBinary") {
     dependsOn("installDist")
+    doLast {
+        val from = layout.projectDirectory.file("build/install/app/bin/app").asFile.toPath()
+        val to = layout.projectDirectory.dir("../code/app/build/install/app/bin").file("app").asFile.toPath()
+
+        Files.createDirectories(to.parent)
+        Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING)
+
+        runCatching { to.toFile().setExecutable(true) }
+    }
+}
+
+tasks.test {
+    dependsOn("prepareCliBinary")
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
 }
