@@ -40,11 +40,8 @@ tasks.register("install") {
     dependsOn("publishToMavenLocal")
 }
 
-tasks.named("jar") {
-    dependsOn("installDist")
-}
-
 tasks.test {
+    dependsOn("installDist")
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
 }
