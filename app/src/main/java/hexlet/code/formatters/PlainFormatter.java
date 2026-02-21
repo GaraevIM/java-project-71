@@ -10,7 +10,7 @@ public final class PlainFormatter implements DiffFormatter {
     @Override
     public String format(List<DiffNode> tree) {
         String result = renderNodes(tree, "");
-        return result.isEmpty() ? "" : result + "\n";
+        return result.isEmpty() ? "" : result;
     }
 
     private String renderNodes(List<DiffNode> nodes, String path) {
