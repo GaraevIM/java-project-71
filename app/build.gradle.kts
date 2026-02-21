@@ -42,8 +42,28 @@ tasks.register("install") {
     dependsOn("publishToMavenLocal")
 }
 
+tasks.register("prepareCliBinary") {
+    dependsOn("installDist")
+    doLast {
+        val from = layout.projectDirectory.file("build/install/app/bin/app").asFile.toPath()
+        val to = layout.projectDirectory.file("../code/app/build/install/app/bin/app").asFile.toPath()
+
+        java.nio.file.Files.createDirectories(to.parent)
+        java.nio.file.Files.copy(
+            from,
+            to,
+            java.nio.file.StandardCopyOption.REPLACE_EXISTING
+        )
+        try {
+            to.toFile().setExecutable(true)
+        } catch (_: Exception) {
+        }
+    }
+}
+
 tasks.test {
     dependsOn("installDist")
+    dependsOn("prepareCliBinary")
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
 }
