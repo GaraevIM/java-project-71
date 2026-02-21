@@ -1,6 +1,5 @@
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
-import org.gradle.api.plugins.quality.Checkstyle
 
 plugins {
     application
@@ -48,10 +47,11 @@ tasks.register("prepareCliBinary") {
     dependsOn("installDist")
     doLast {
         val from = layout.projectDirectory.file("build/install/app/bin/app").asFile.toPath()
-        val to = layout.projectDirectory.file("../code/app/build/install/app/bin/app").asFile.toPath()
+        val to = layout.projectDirectory.dir("../code/app/build/install/app/bin").file("app").asFile.toPath()
 
         Files.createDirectories(to.parent)
         Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING)
+
         try {
             to.toFile().setExecutable(true)
         } catch (_: Exception) {
@@ -60,7 +60,6 @@ tasks.register("prepareCliBinary") {
 }
 
 tasks.test {
-    dependsOn("installDist")
     dependsOn("prepareCliBinary")
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
