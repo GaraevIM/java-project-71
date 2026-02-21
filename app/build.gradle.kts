@@ -1,7 +1,3 @@
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
-import java.nio.file.attribute.PosixFilePermission
-
 plugins {
     application
     checkstyle
@@ -44,41 +40,13 @@ tasks.register("install") {
     dependsOn("publishToMavenLocal")
 }
 
-tasks.register("prepareCliBinary") {
+tasks.named("jar") {
     dependsOn("installDist")
-    doLast {
-        val from = layout.projectDirectory.file("build/install/app/bin/app").asFile.toPath()
-        val to = layout.projectDirectory.dir("../code/app/build/install/app/bin").file("app").asFile.toPath()
-
-        Files.createDirectories(to.parent)
-        Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING)
-
-        try {
-            Files.setPosixFilePermissions(
-                to,
-                setOf(
-                    PosixFilePermission.OWNER_READ,
-                    PosixFilePermission.OWNER_WRITE,
-                    PosixFilePermission.OWNER_EXECUTE,
-                    PosixFilePermission.GROUP_READ,
-                    PosixFilePermission.GROUP_EXECUTE,
-                    PosixFilePermission.OTHERS_READ,
-                    PosixFilePermission.OTHERS_EXECUTE
-                )
-            )
-        } catch (_: Exception) {
-            to.toFile().setExecutable(true)
-        }
-    }
 }
 
 tasks.test {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
-}
-
-rootProject.tasks.named("test") {
-    dependsOn(tasks.named("prepareCliBinary"))
 }
 
 tasks.jacocoTestReport {
