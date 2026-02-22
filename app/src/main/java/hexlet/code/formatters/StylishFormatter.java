@@ -36,6 +36,7 @@ public final class StylishFormatter implements DiffFormatter {
                     + renderNodes(node.children(), depth + 1)
                     + "\n"
                     + currentIndent + "}";
+            default -> throw new IllegalStateException("Unexpected status: " + node.status());
         };
     }
 
