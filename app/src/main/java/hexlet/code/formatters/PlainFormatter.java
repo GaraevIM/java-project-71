@@ -28,6 +28,7 @@ public final class PlainFormatter implements DiffFormatter {
                     + " to " + formatValue(node.value2());
             case NESTED -> renderNodes(node.children(), fullPath);
             case UNCHANGED -> "";
+            default -> throw new IllegalStateException("Unknown node status: " + node.status());
         };
     }
 
