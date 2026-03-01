@@ -5,12 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.formatters.JsonFormatter;
 import hexlet.code.formatters.PlainFormatter;
 import hexlet.code.formatters.StylishFormatter;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CoverageTest {
 
@@ -106,7 +107,7 @@ class CoverageTest {
     }
 
     @Test
-    void formatterShouldTrimFormatName() throws Exception {
+    void formatterShouldTrimFormatName() {
         List<DiffNode> tree = List.of(new DiffNode("a", NodeStatus.ADDED, null, 1, List.of()));
         assertDoesNotThrow(() -> Formatter.format(tree, " stylish "));
         assertDoesNotThrow(() -> Formatter.format(tree, " plain "));
