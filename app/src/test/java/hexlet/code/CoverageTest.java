@@ -15,13 +15,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CoverageTest {
 
+    private static final int ZERO = 0;
+
+    private static final int ONE = 1;
+
+    private static final int TWO = 2;
+
+    private static final int THREE = 3;
+
+    private static final int FOUR = 4;
+
+    private static final int FIVE = 5;
+
+    private static final int TEN = 10;
+
     @Test
     void parserShouldParseJsonAndYaml() throws Exception {
         Map<String, Object> json = Parser.parse("{\"a\": 1}", "json");
-        assertEquals(1, ((Number) json.get("a")).intValue());
+        assertEquals(ONE, ((Number) json.get("a")).intValue());
 
         Map<String, Object> yaml = Parser.parse("a: 1\n", "yml");
-        assertEquals(1, ((Number) yaml.get("a")).intValue());
+        assertEquals(ONE, ((Number) yaml.get("a")).intValue());
     }
 
     @Test
@@ -32,41 +46,41 @@ class CoverageTest {
     @Test
     void diffTreeBuilderShouldBuildAllStatuses() {
         Map<String, Object> m1 = Map.of(
-                "a", 1,
-                "b", Map.of("x", 1),
-                "removed", 10
+                "a", ONE,
+                "b", Map.of("x", ONE),
+                "removed", TEN
         );
 
         Map<String, Object> m2 = Map.of(
-                "a", 1,
-                "b", Map.of("x", 2),
-                "c", 3
+                "a", ONE,
+                "b", Map.of("x", TWO),
+                "c", THREE
         );
 
         List<DiffNode> tree = DiffTreeBuilder.build(m1, m2);
 
-        assertEquals("a", tree.get(0).key());
-        assertEquals(NodeStatus.UNCHANGED, tree.get(0).status());
+        assertEquals("a", tree.get(ZERO).key());
+        assertEquals(NodeStatus.UNCHANGED, tree.get(ZERO).status());
 
-        assertEquals("b", tree.get(1).key());
-        assertEquals(NodeStatus.NESTED, tree.get(1).status());
-        assertEquals(1, tree.get(1).children().size());
-        assertEquals(NodeStatus.CHANGED, tree.get(1).children().get(0).status());
+        assertEquals("b", tree.get(ONE).key());
+        assertEquals(NodeStatus.NESTED, tree.get(ONE).status());
+        assertEquals(ONE, tree.get(ONE).children().size());
+        assertEquals(NodeStatus.CHANGED, tree.get(ONE).children().get(ZERO).status());
 
-        assertEquals("c", tree.get(2).key());
-        assertEquals(NodeStatus.ADDED, tree.get(2).status());
+        assertEquals("c", tree.get(TWO).key());
+        assertEquals(NodeStatus.ADDED, tree.get(TWO).status());
 
-        assertEquals("removed", tree.get(3).key());
-        assertEquals(NodeStatus.REMOVED, tree.get(3).status());
+        assertEquals("removed", tree.get(THREE).key());
+        assertEquals(NodeStatus.REMOVED, tree.get(THREE).status());
     }
 
     @Test
     void stylishFormatterShouldRenderAllNodeTypes() {
         List<DiffNode> tree = List.of(
-                new DiffNode("same", NodeStatus.UNCHANGED, 1, null, List.of()),
-                new DiffNode("added", NodeStatus.ADDED, null, 2, List.of()),
-                new DiffNode("removed", NodeStatus.REMOVED, 3, null, List.of()),
-                new DiffNode("changed", NodeStatus.CHANGED, 4, 5, List.of()),
+                new DiffNode("same", NodeStatus.UNCHANGED, ONE, null, List.of()),
+                new DiffNode("added", NodeStatus.ADDED, null, TWO, List.of()),
+                new DiffNode("removed", NodeStatus.REMOVED, THREE, null, List.of()),
+                new DiffNode("changed", NodeStatus.CHANGED, FOUR, FIVE, List.of()),
                 new DiffNode("nested", NodeStatus.NESTED, null, null, List.of(
                         new DiffNode("inside", NodeStatus.ADDED, null, "v", List.of())
                 ))
@@ -87,8 +101,8 @@ class CoverageTest {
     void plainFormatterShouldRenderBasicCases() {
         List<DiffNode> tree = List.of(
                 new DiffNode("a", NodeStatus.ADDED, null, "x", List.of()),
-                new DiffNode("b", NodeStatus.REMOVED, 1, null, List.of()),
-                new DiffNode("c", NodeStatus.CHANGED, 2, 3, List.of())
+                new DiffNode("b", NodeStatus.REMOVED, ONE, null, List.of()),
+                new DiffNode("c", NodeStatus.CHANGED, TWO, THREE, List.of())
         );
 
         String out = new PlainFormatter().format(tree);
@@ -103,12 +117,12 @@ class CoverageTest {
         String json = new JsonFormatter().format(List.of());
         JsonNode node = new ObjectMapper().readTree(json);
         assertTrue(node.isArray());
-        assertEquals(0, node.size());
+        assertEquals(ZERO, node.size());
     }
 
     @Test
     void formatterShouldTrimFormatName() {
-        List<DiffNode> tree = List.of(new DiffNode("a", NodeStatus.ADDED, null, 1, List.of()));
+        List<DiffNode> tree = List.of(new DiffNode("a", NodeStatus.ADDED, null, ONE, List.of()));
         assertDoesNotThrow(() -> Formatter.format(tree, " stylish "));
         assertDoesNotThrow(() -> Formatter.format(tree, " plain "));
         assertDoesNotThrow(() -> Formatter.format(tree, " json "));
